@@ -3,7 +3,7 @@
 # Description:  Take the cell phone class of last week and divide the cell phone class into another file
 #               (name the file clearly). Leave the main function in the original file. Test, that your code still works.
 
-from Ex4_3_CellPhone import CellPhone
+from Ex4_CellPhone import CellPhone
 
 
 def main():

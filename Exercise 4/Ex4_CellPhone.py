@@ -1,7 +1,7 @@
-# File:         Ex4_3
+# File:         Ex4_CellPhone
 # Author:       Niki Leppänen
-# Description:  Take the cell phone class of last week and divide the cell phone class into another file
-#               (name the file clearly). Leave the main function in the original file. Test, that your code still works.
+# Description:  Add and ID data attribute (integer between 1-6) to the cell phone.Cell phone class shall have accessor
+#               and mutator methods for all data attributes. Also check the __str__ method is up to date.
 
 class CellPhone:
 
@@ -9,6 +9,7 @@ class CellPhone:
         self.__manufact = 'manufacturer'
         self.__model = 'model'
         self.__retailPrice = 0
+        self.id = 1
 
     def set_manufact(self, manufacturer):
         self.__manufact = manufacturer
@@ -19,6 +20,9 @@ class CellPhone:
     def set_retail_price(self, retail_price):
         self.__retailPrice = retail_price
 
+    def set_id(self, id_number):
+        self.id = id_number
+
     def get_manufact(self):
         return self.__manufact
 
@@ -28,7 +32,16 @@ class CellPhone:
     def get_retail_price(self):
         return self.__retailPrice
 
+    def get_id(self):
+        return self.id
+
     def provided_data(self):
         print("Manufacturer: ", self.get_manufact())
         print("Model number: ", self.get_model())
         print("Retail price: ", self.get_retail_price())
+
+    def __str__(self):
+        return f"""Id: {self.id}\nManufacturer: {self.__manufact}
+        \nModel: {self.__model}\nRetail price: {self.__retailPrice}"""
+
+
