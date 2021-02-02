@@ -1,4 +1,4 @@
-# File:         main
+# File:         Ex4_6
 # Author:       Niki Leppänen
 # Description:  Create different cell phone objects (which have different data attribute values,
 #               use mutator methods to change the data attribute values).
@@ -6,8 +6,6 @@
 
 from Exercise_4.Ex4_Dice import Dice
 from Exercise_4.Ex4_CellPhone import CellPhone
-
-
 
 cell1 = CellPhone()
 cell2 = CellPhone()
@@ -41,11 +39,8 @@ def main():
     ask_phones(cell6)
 
     for item in phone_list:
-        if item.get_id() == my_dice.roll():
+        if item.get_id() == my_dice.get_sidenumber():
             print(item)
 
 
 main()
-
-
-

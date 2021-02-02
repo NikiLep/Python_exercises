@@ -1,7 +1,8 @@
 # File:         Ex4_CellPhone
 # Author:       Niki Leppänen
-# Description:  Add and ID data attribute (integer between 1-6) to the cell phone.Cell phone class shall have accessor
-#               and mutator methods for all data attributes. Also check the __str__ method is up to date.
+# Description:  Create different cell phone objects (which have different data attribute values,
+#               use mutator methods to change the data attribute values).
+#               Print out each object’s state (use the __str__ method in the cell phone class).
 
 class CellPhone:
 
@@ -35,13 +36,8 @@ class CellPhone:
     def get_id(self):
         return self.id
 
-    def provided_data(self):
-        print("Manufacturer: ", self.get_manufact())
-        print("Model number: ", self.get_model())
-        print("Retail price: ", self.get_retail_price())
-
     def __str__(self):
-        return f"""Id: {self.id}\nManufacturer: {self.__manufact}
-        \nModel: {self.__model}\nRetail price: {self.__retailPrice}"""
+        return f"""\nId: {self.id}\nManufacturer: {self.__manufact}
+Model: {self.__model}\nRetail price: {self.__retailPrice}\n"""
 
 
