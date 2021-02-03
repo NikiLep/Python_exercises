@@ -66,19 +66,3 @@ class Car:
         return f"""\nMaker: {self.__make}\nModel: {self.__model}\nMileage: {self.__mileage}km\nPrice: {self.__price}€
 Color: {self.__color}\nMaximum load limit: {self.__max_load}kg\nSize of trunk: {self.__trunk_size}m^3"""
 
-
-def main():
-    car = Car()
-
-    car.set_make(input("\nGive maker: "))
-    car.set_model(input("Give model: "))
-    car.set_mileage(int(input("Give mileage: ")))
-    car.set_price(float(input("Give price: ")))
-    car.set_color(input("Give color: "))
-    car.set_max_load(int(input("Give maximum load: ")))
-    car.set_trunk_size(float(input("Give trunk size(m^3): ")))
-
-    print(car)
-
-
-main()
