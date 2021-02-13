@@ -1,8 +1,6 @@
 # File:         Ex4_Dice
 # Author:       Niki Leppänen
-# Description:  Create different cell phone objects (which have different data attribute values,
-#               use mutator methods to change the data attribute values).
-#               Print out each object’s state (use the __str__ method in the cell phone class).
+# Description:  Includes dice class which returns 1 - 6 as a value of six side dice.
 
 from random import randint
 
@@ -11,11 +9,25 @@ class Dice:
 
     # initialize side of the dice, color of the side and color of the number
     def __init__(self):
-        self.sidenumber = 1
+        self.__sidenumber = 1
+        self.__sum = 0
+        self.__id = 1
 
     # The roll method generated random number.
     def roll(self):
-        self.sidenumber = randint(1, 6)
+        self.__sidenumber = randint(1, 6)
 
     def get_sidenumber(self):
-        return self.sidenumber
+        return self.__sidenumber
+
+    def sum(self):
+        self.__sum += self.__sidenumber
+
+    def get_sum(self):
+        return self.__sum
+
+    def get_id(self):
+        return self.__id
+
+    def set_id(self, id):
+        self.__id = id
