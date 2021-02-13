@@ -1,4 +1,4 @@
-# File:         Ex4_3
+# File:         Ex5_4
 # Author:       Niki Leppänen
 # Description:  Create multiple dices (at least three) and put them in a list.
 # See that your dice can be rolled and the side can be shown.
