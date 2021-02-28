@@ -25,7 +25,7 @@ def main():
 
     mammal_list = []
 
-    #dice.roll()
+    dice.roll()
 
     car.set_make(input("\nGive maker: "))
     car.set_model(input("Give model: "))
