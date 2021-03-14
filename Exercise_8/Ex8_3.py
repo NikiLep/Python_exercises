@@ -1,4 +1,4 @@
-# File:         Ex8_1
+# File:         Ex8_3
 # Author:       Niki Leppänen
 # Description:  Code cookie baker that asks user what flavor he wants. Includes random flavor method.
 from random import randint
@@ -7,7 +7,7 @@ from random import randint
 class Cookies:
     def __init__(self):
 
-        self.__frosting = "flavor"
+        self.__frosting = False
 
     def set_frosting(self, frosting):
         self.__frosting = frosting
@@ -35,26 +35,41 @@ class Cookies:
 
 
 def main():
-    c_amount = int(input("How many cookies do you want to be baked?\n"))
-    cookies = []
+    while True:
+        print("Let's bake 10 cookies!!\n")
+        cookies = []
 
-    for i in range(c_amount):
-        cookie = Cookies()
-        print("\nWhat flavor do you want on your cookie number ", i + 1)
-        flavor = input('Write down desired flavor or write "random" for random flavor.\n')
+        while len(cookies) < 10:
+            cookie = Cookies()
+            cookies.append(cookie)
 
-        if flavor == "random":
-            cookie.random_flavor()
-        else:
-            cookie.set_frosting(flavor)
+        print("Now we have ", len(cookies), " baked cookies\n")
 
-        print(cookie)
-        cookies.append(cookie)
+        print("What flavor of frosting do you want?\nBy typing 'random' you get random flavor out of six option.")
+        for i in cookies:
+            if not i.get_frosting():
+                print("\nCookie number", cookies.index(i) + 1)
+                flavor = input()
+                if flavor == "random":
+                    i.random_flavor()
+                else:
+                    i.set_frosting(flavor)
 
-    print()
-    print("Baked cookies:")
-    for i in cookies:
-        print(i)
+        for i in cookies:
+            print("[", cookies.index(i) + 1, "]", i)
+
+        while True:
+            ask = input("\nDo you like the flavors? [YES/NO]")
+            if ask == "NO":
+                print("Let's make a new batch!\n...")
+                break
+            elif ask == "YES":
+                print("\nEnjoy your cookies :)")
+                break
+            else:
+                print("\nIncorrect input")
+        if ask == "YES":
+            break
 
 
 main()
