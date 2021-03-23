@@ -2,7 +2,7 @@
 # Author: Niki Leppänen
 # Description: Code the alarm clock, use objects.
 
-from datetime import datetime
+import datetime
 import time
 from tkinter import *
 from tkinter.ttk import *
@@ -12,6 +12,7 @@ class AlarmClock:
 
     def __init__(self):
         self.wake_up_time = ""
+        self.current = ""
 
     # This method allows user to set alarm
     def set_alarm(self, wakeup):
@@ -22,8 +23,11 @@ class AlarmClock:
         return self.wake_up_time
 
     def get_time(self):
-        current_time = datetime.now()
-        return current_time.strftime("%H:%M:%S")
+        current_time = datetime.datetime.now()
+        self.current = current_time.strftime("%H:%M:%S")
+        return self.current
+
+
 
 
 

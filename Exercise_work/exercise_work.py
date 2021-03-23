@@ -10,6 +10,7 @@ from PIL import Image, ImageTk
 from Exercise_work.paint_app import paint
 from Exercise_work.alarm_clock import AlarmClock
 from time import strftime
+import datetime
 import winsound
 import tkinter.messagebox
 
@@ -30,12 +31,24 @@ def alarm_clock_app():
 
     alarm_window = Toplevel(root)
 
+    def alarm_ring(set_alarm_timer):
+        while True:
+            current = datetime.datetime.now()
+            now = current.strftime("%H:%M:%S")
+            print(now)
+            if now == set_alarm_timer:
+                print("Time to Wake up")
+                winsound.PlaySound("sound.wav", winsound.SND_ASYNC)
+                break
+
     def alarm_set():
         alarm_time = "%s:%s:00" % (hours.get(), mins.get())
 
         alarm.set_alarm(alarm_time)
         print(alarm.get_alarm_time())
         print(alarm.get_time())
+
+        alarm_ring(alarm.get_alarm_time())
 
     alarm_window.title("Alarm clock")
 
@@ -55,9 +68,11 @@ def alarm_clock_app():
     set_alarm = Button(alarm_window, text="Set alarm", command=alarm_set)
     set_alarm.place(y=60, x=88)
 
-    if alarm.get_alarm_time() == alarm.get_time():
-        winsound.Beep(500, 100)
-        tkinter.messagebox.showinfo("ALARM", "WAKE UP!!!")
+
+
+
+
+
 
 
 # Text area for clock
