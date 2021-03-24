@@ -1,6 +1,5 @@
 import random
 
-
 class Dice:
     def __init__(self):
         self.dice_number = 0

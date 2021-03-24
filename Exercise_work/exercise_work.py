@@ -9,11 +9,12 @@ import tkinter.messagebox
 from time import strftime
 from tkinter import *
 from tkinter.ttk import *
+from PIL import ImageTk,Image
 
 from Exercise_work.paint_app import paint
 from Exercise_work.alarm_clock import AlarmClock
 from Exercise_work.player import Player
-
+from Exercise_work.dice import Dice
 
 
 root = Tk()
@@ -83,10 +84,80 @@ def poker_game():
 
 
 def dice_game():
+    def game_bet():
+        bet_size = int("%s" % (bet.get()))
+        return bet_size
+
+    def game():
+
+        computer1.roll_dice()
+        computer2.roll_dice()
+        player1.roll_dice()
+        player2.roll_dice()
+
+        computer_total = computer1.get_dice() + computer2.get_dice()
+        player_total = player1.get_dice() + player2.get_dice()
+
+        if computer_total > player_total:
+            player.set_money(player.get_money()-game_bet())
+            lose_lbl.place(x=355, y=260)
+            print(player)
+
+        elif player_total > computer_total:
+            player.set_money(player.get_money()+game_bet())
+            win_lbl.place(x=355, y=260)
+            print(player)
+
+        else:
+            tie_lbl.place(x=355, y=260)
+            print(player)
+
+    computer1 = Dice()
+    computer2 = Dice()
+    player1 = Dice()
+    player2 = Dice()
+
+    # configures for the dice window
     dice = Toplevel(root)
     dice.title("Dice game")
-    dice.geometry('800x800')
-    dice.configure(bg='blue')
+    dice.geometry('800x600')
+
+    # dice window text label on top of the screen
+    top_lbl = Label(dice, text="Roll higher than computer", font=('calibri', 20, 'bold'))
+    top_lbl.pack(anchor='n')
+
+    # pictures of all the dices
+    dice1 = PhotoImage(file=r"C:\Users\Niki\Desktop\Olio-ohjelmointi\Images\dice1.png")
+    dice2 = PhotoImage(file=r"C:\Users\Niki\Desktop\Olio-ohjelmointi\Images\dice2.png")
+    dice3 = PhotoImage(file=r"C:\Users\Niki\Desktop\Olio-ohjelmointi\Images\dice3.png")
+    dice4 = PhotoImage(file=r"C:\Users\Niki\Desktop\Olio-ohjelmointi\Images\dice4.png")
+    dice5 = PhotoImage(file=r"C:\Users\Niki\Desktop\Olio-ohjelmointi\Images\dice5.png")
+    dice6 = PhotoImage(file=r"C:\Users\Niki\Desktop\Olio-ohjelmointi\Images\dice6.png")
+
+    dices = (dice1, dice2, dice3, dice4, dice5, dice6)
+
+    bet = Entry(dice, width=12)
+    bet.place(x=700, y=300)
+
+    bet_lbl = Label(dice, text="Your bet", font=('calibri', 16, 'bold'))
+    bet_lbl.place(x=698, y=270)
+
+    roll_btn = Button(dice, text="ROLL", command=game)
+    roll_btn.place(x=365, y=500)
+
+    # Win/Lose/Tie labels
+    win_lbl = Label(dice, text="You won", font=('calibri', 20, 'bold'))
+    lose_lbl = Label(dice, text="You lost", font=('calibri', 20, 'bold'))
+    tie_lbl = Label(dice, text="Tie", font=('calibri', 20, 'bold'))
+
+    win_lbl.config(foreground='red')
+    lose_lbl.config(foreground='red')
+    tie_lbl.config(foreground='red')
+
+    # show rolled dices
+
+
+
 
 
 # Text area for clock
@@ -94,9 +165,15 @@ time_lbl = Label(root, font=('calibri', 10, 'bold'))
 time_lbl.pack(anchor='ne')
 current_time()
 
+# keeps track on players money
+player = Player()
+money = player
+
 money_lbl = Label(root, font=('calibri', 10, 'bold'))
-money_lbl.pack(anchor='nw')
-money_amount()
+money_lbl.place(x=0, y=0)
+money_lbl.config(text=money)
+money_lbl.after(1000, player.get_money)
+
 
 # logos for buttons
 paint_logo = PhotoImage(file=r"C:\Users\Niki\Desktop\Olio-ohjelmointi\Images\paint.png")
