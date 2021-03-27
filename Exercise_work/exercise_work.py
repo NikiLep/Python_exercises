@@ -22,9 +22,9 @@ root.geometry('200x400')
 
 
 def money_amount():
-    player = Player()
     money = player
     money_lbl.config(text=money)
+    money_lbl.after(1000, money_amount)
 
 
 # function for getting current time
@@ -112,6 +112,23 @@ def dice_game():
             tie_lbl.place(x=355, y=260)
             print(player)
 
+        # show rolled dices
+        print(player1.get_dice())
+        print(player2.get_dice())
+        print(computer1.get_dice())
+        print(computer2.get_dice())
+
+        computer_dice1 = Label(dice, image=dices[computer1.get_dice() - 1])
+        computer_dice2 = Label(dice, image=dices[computer2.get_dice() - 1])
+        player_dice1 = Label(dice, image=dices[player1.get_dice() - 1])
+        player_dice2 = Label(dice, image=dices[player2.get_dice() - 1])
+
+        computer_dice1.place(x=230, y=80)
+        computer_dice2.place(x=430, y=80)
+        player_dice1.place(x=230, y=350)
+        player_dice2.place(x=430, y=350)
+
+    # objects for dice game
     computer1 = Dice()
     computer2 = Dice()
     player1 = Dice()
@@ -127,12 +144,12 @@ def dice_game():
     top_lbl.pack(anchor='n')
 
     # pictures of all the dices
-    dice1 = PhotoImage(file=r"C:\Users\Niki\Desktop\Olio-ohjelmointi\Images\dice1.png")
-    dice2 = PhotoImage(file=r"C:\Users\Niki\Desktop\Olio-ohjelmointi\Images\dice2.png")
-    dice3 = PhotoImage(file=r"C:\Users\Niki\Desktop\Olio-ohjelmointi\Images\dice3.png")
-    dice4 = PhotoImage(file=r"C:\Users\Niki\Desktop\Olio-ohjelmointi\Images\dice4.png")
-    dice5 = PhotoImage(file=r"C:\Users\Niki\Desktop\Olio-ohjelmointi\Images\dice5.png")
-    dice6 = PhotoImage(file=r"C:\Users\Niki\Desktop\Olio-ohjelmointi\Images\dice6.png")
+    dice1 = ImageTk.PhotoImage(Image.open("C:/Users/Niki/Desktop/Olio-ohjelmointi/Images/dice1.png"))
+    dice2 = ImageTk.PhotoImage(Image.open("C:/Users/Niki/Desktop/Olio-ohjelmointi/Images/dice2.png"))
+    dice3 = ImageTk.PhotoImage(Image.open("C:/Users/Niki/Desktop/Olio-ohjelmointi/Images/dice3.png"))
+    dice4 = ImageTk.PhotoImage(Image.open("C:/Users/Niki/Desktop/Olio-ohjelmointi/Images/dice4.png"))
+    dice5 = ImageTk.PhotoImage(Image.open("C:/Users/Niki/Desktop/Olio-ohjelmointi/Images/dice5.png"))
+    dice6 = ImageTk.PhotoImage(Image.open("C:/Users/Niki/Desktop/Olio-ohjelmointi/Images/dice6.png"))
 
     dices = (dice1, dice2, dice3, dice4, dice5, dice6)
 
@@ -154,10 +171,6 @@ def dice_game():
     lose_lbl.config(foreground='red')
     tie_lbl.config(foreground='red')
 
-    # show rolled dices
-
-
-
 
 
 # Text area for clock
@@ -167,12 +180,10 @@ current_time()
 
 # keeps track on players money
 player = Player()
-money = player
 
 money_lbl = Label(root, font=('calibri', 10, 'bold'))
 money_lbl.place(x=0, y=0)
-money_lbl.config(text=money)
-money_lbl.after(1000, player.get_money)
+money_amount()
 
 
 # logos for buttons
