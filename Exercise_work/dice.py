@@ -1,4 +1,9 @@
+# File:         dice
+# Author:       Niki Leppänen
+# Description:  Class for dice game
+
 import random
+
 
 class Dice:
     def __init__(self):

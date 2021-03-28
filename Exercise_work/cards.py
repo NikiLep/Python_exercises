@@ -1,3 +1,6 @@
+# File:         cards
+# Author:       Niki Leppänen
+# Description:  Class for creating cards and getting its value
 
 
 class Card:

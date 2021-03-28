@@ -1,4 +1,4 @@
-# File:         Ex8_5
+# File:         exercise_work
 # Author:       Niki Leppänen
 # Description:  Simple GUI with tkinter, main screen has buttons that opens different applications/games
 #               (alarm clock, card games, dice roll, ect.)
@@ -39,6 +39,7 @@ def alarm_clock_app():
 
     alarm_window = Toplevel(root)
 
+    # function for checking if alarm time is equal to current time and then sets of alarm
     def alarm_ring(set_alarm_timer):
         while True:
             current = datetime.datetime.now()
@@ -48,6 +49,7 @@ def alarm_clock_app():
                 tkinter.messagebox.showinfo(title="Alarm!!!", message="Wake up!!!")
                 break
 
+    # function to get alarm time from entry box
     def alarm_set():
         alarm_time = "%s:%s:00" % (hours.get(), mins.get())
 
@@ -61,62 +63,62 @@ def alarm_clock_app():
 
     alarm_window.geometry("250x100")
 
+    # all the texts on the window
     hour_lbl = Label(alarm_window, font=('calibri', 14, 'bold'), text="HOURS")
     mins_lbl = Label(alarm_window, font=('calibri', 14, 'bold'), text="MINS")
     hour_lbl.place(y=8, x=54)
     mins_lbl.place(y=8, x=136)
 
+    # entry widgets
     hours = Entry(alarm_window, width=9)
     mins = Entry(alarm_window, width=9)
 
     hours.place(y=30, x=56)
     mins.place(y=30, x=136)
 
+    # Buttons
     set_alarm = Button(alarm_window, text="Set alarm", command=alarm_set)
     set_alarm.place(y=60, x=88)
 
 
-def poker_game():
-    poker = Toplevel(root)
-    poker.title("Poker")
-    poker.geometry('1200x800')
-    poker.configure(bg='green')
+def red_dog_game():
+    red_dog = Toplevel(root)
+    red_dog.title("Red dog")
+    red_dog.geometry('1200x800')
+    red_dog.configure(bg='green')
 
 
 def dice_game():
+    # function to get bet amount from entry box
     def game_bet():
         bet_size = int("%s" % (bet.get()))
         return bet_size
 
+    # game main function
     def game():
-
+        # rolling all the dices
         computer1.roll_dice()
         computer2.roll_dice()
         player1.roll_dice()
         player2.roll_dice()
 
+        # getting dice values and adding them together
         computer_total = computer1.get_dice() + computer2.get_dice()
         player_total = player1.get_dice() + player2.get_dice()
 
+        # checking who wins and adjust player money, also shows text whether you win, lose or tie
         if computer_total > player_total:
             player.set_money(player.get_money()-game_bet())
             lose_lbl.place(x=355, y=260)
-            print(player)
 
         elif player_total > computer_total:
             player.set_money(player.get_money()+game_bet())
             win_lbl.place(x=355, y=260)
-            print(player)
 
         else:
             tie_lbl.place(x=355, y=260)
-            print(player)
 
         # show rolled dices
-        print(player1.get_dice())
-        print(player2.get_dice())
-        print(computer1.get_dice())
-        print(computer2.get_dice())
 
         computer_dice1 = Label(dice, image=dices[computer1.get_dice() - 1])
         computer_dice2 = Label(dice, image=dices[computer2.get_dice() - 1])
@@ -153,12 +155,15 @@ def dice_game():
 
     dices = (dice1, dice2, dice3, dice4, dice5, dice6)
 
+    # All the entry widgets
     bet = Entry(dice, width=12)
     bet.place(x=700, y=300)
 
+    # All the texts
     bet_lbl = Label(dice, text="Your bet", font=('calibri', 16, 'bold'))
     bet_lbl.place(x=698, y=270)
 
+    # All the buttons
     roll_btn = Button(dice, text="ROLL", command=game)
     roll_btn.place(x=365, y=500)
 
@@ -196,7 +201,7 @@ paint_btn.pack(pady=10)
 alarm_btn = Button(root, text="Alarm clock", command=alarm_clock_app)
 alarm_btn.pack(pady=10)
 
-poker_btn = Button(root, text="Poker", command=poker_game)
+poker_btn = Button(root, text="Poker")
 poker_btn.pack(pady=10)
 
 dice_btn = Button(root, text="Dice game", command=dice_game)

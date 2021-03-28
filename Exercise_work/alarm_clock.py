@@ -1,11 +1,8 @@
-# File: Ex2_10
+# File: alarm_clock
 # Author: Niki Leppänen
-# Description: Code the alarm clock, use objects.
+# Description: Class for getting current time and alarm clock
 
 import datetime
-import time
-from tkinter import *
-from tkinter.ttk import *
 
 
 class AlarmClock:

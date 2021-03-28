@@ -1,9 +1,15 @@
+# File:         deck
+# Author:       Niki Leppänen
+# Description:  Class for creating deck and getting cards out of the deck for player
+
 import random
 from Exercise_work.cards import Card
+from Exercise_work.player import Player
 
 
-class Deck:
+class Deck(Player):
     def __init__(self):
+        Player.__init__(self)
         self.cards = []
         self.build()
 
