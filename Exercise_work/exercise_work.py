@@ -201,7 +201,7 @@ paint_btn.pack(pady=10)
 alarm_btn = Button(root, text="Alarm clock", command=alarm_clock_app)
 alarm_btn.pack(pady=10)
 
-poker_btn = Button(root, text="Poker")
+poker_btn = Button(root, text="Red Dog")
 poker_btn.pack(pady=10)
 
 dice_btn = Button(root, text="Dice game", command=dice_game)
