@@ -9,8 +9,14 @@ class Card:
         self.value = value
 
     def show_card(self):
-        return "{} of {}".format(self.value, self.suit)
+        print("{} of {}".format(self.value, self.suit))
 
     def get_value(self):
         return self.value
+
+    def get_suit(self):
+        return self.suit
+
+    def __str__(self):
+        return f'''{self.value}{self.suit}'''
 

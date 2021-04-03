@@ -15,6 +15,8 @@ from Exercise_work.paint_app import paint
 from Exercise_work.alarm_clock import AlarmClock
 from Exercise_work.player import Player
 from Exercise_work.dice import Dice
+from Exercise_work.deck import Deck
+from Exercise_work.cards import Card
 
 
 root = Tk()
@@ -81,11 +83,75 @@ def alarm_clock_app():
     set_alarm.place(y=60, x=88)
 
 
-def red_dog_game():
-    red_dog = Toplevel(root)
-    red_dog.title("Red dog")
-    red_dog.geometry('1200x800')
-    red_dog.configure(bg='green')
+def texas_game():
+    texas = Toplevel(root)
+    texas.title("Texas Hold'em")
+    texas.geometry('1200x800')
+
+    # creates empty canvas and stretches it to fit on the window
+    canvas = Canvas(texas, background='green')
+    canvas.grid(row=0, column=0, sticky='nsew')
+
+    test = Deck()
+
+    test.show_deck()
+
+    card = test.draw_card()
+    card.show_card()
+
+    def game():
+        table = []
+
+        deck = Deck()
+        computer1 = Player()
+        computer2 = Player()
+        computer3 = Player()
+
+        players = [player, computer1, computer2, computer3]
+        comp_c1 = []
+        comp_c2 = []
+        comp_c3 = []
+        player_c = []
+
+        deck.shuffle_deck()
+
+        deck.show_deck()
+
+        player.set_hand(deck.draw_card())
+
+        # Gives everyone two cards at the beginning
+        for i in players:
+            for c in range(2):
+                comp_c1.append(deck.draw_card())
+                comp_c2.append(deck.draw_card())
+                comp_c3.append(deck.draw_card())
+                player_c.append(deck.draw_card())
+
+        # Places three cards on the table
+        for c in range(3):
+            card = deck.draw_card()
+            table.append(card)
+
+        print(table)
+
+        for i in table:
+            print(i)
+            i.show_card()
+
+        card = deck.draw_card()
+        card.show_card()
+
+
+
+
+
+    game()
+
+
+
+
+
+
 
 
 def dice_game():
@@ -177,7 +243,6 @@ def dice_game():
     tie_lbl.config(foreground='red')
 
 
-
 # Text area for clock
 time_lbl = Label(root, font=('calibri', 10, 'bold'))
 time_lbl.pack(anchor='ne')
@@ -201,7 +266,7 @@ paint_btn.pack(pady=10)
 alarm_btn = Button(root, text="Alarm clock", command=alarm_clock_app)
 alarm_btn.pack(pady=10)
 
-poker_btn = Button(root, text="Red Dog")
+poker_btn = Button(root, text="Texas Hold'em", command=texas_game)
 poker_btn.pack(pady=10)
 
 dice_btn = Button(root, text="Dice game", command=dice_game)

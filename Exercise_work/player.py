@@ -8,6 +8,7 @@ class Player:
         self.__player_ID = 0
         self.__name = ""
 
+
     def set_money(self, money):
         self.__money = money
 
@@ -25,6 +26,7 @@ class Player:
 
     def get_name(self):
         return self.__name
+
 
     def __str__(self):
         return f"""Money: {self.__money}"""

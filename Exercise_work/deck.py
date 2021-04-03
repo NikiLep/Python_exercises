@@ -4,14 +4,13 @@
 
 import random
 from Exercise_work.cards import Card
-from Exercise_work.player import Player
 
 
-class Deck(Player):
+class Deck:
     def __init__(self):
-        Player.__init__(self)
         self.cards = []
         self.build()
+
 
     def build(self):
         for s in ["Spades", "Clubs", "Diamonds", "Hearts"]:
