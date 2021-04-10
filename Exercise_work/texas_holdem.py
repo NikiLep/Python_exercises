@@ -20,21 +20,50 @@ def game():
     # Pair = 8
     # High Card = 9
     def check_pairs(hand):
-        temporary_hand = []
-        for i in hand:
-            temporary_hand.append(i.get_value())
-        for i in table:
-            temporary_hand.append(i.get_value())
-
-        values = Counter(temporary_hand)
-        values.most_common()
         first = 0
-        for k,v in values:
-            print(k)
-            print(v)
-        print(values)
-        print(first)
+        second = 0
+        r = 0
+        pair_in_hand = False
+        for c in hand:
+            r += 1
+            for i in table:
+                if c.get_value() == i.get_value():
+                    if r == 1:
+                        first += 1
+                    elif r == 2:
+                        second += 1
 
+        if hand[0].get_value() == hand[1].get_value():
+            pair_in_hand = True
+
+        # check for full house
+        if first == 2 and second == 1 or second == 2 and first == 1:
+            return 3
+        # check for two pairs
+        elif first == 1 and second == 1 and first != second:
+            return 7
+        # check same cards with first card in hand
+        elif first > second:
+            # four of a kind
+            if first == 3 or pair_in_hand and first == 2:
+                return 2
+            # three of a kind
+            elif first == 2 or pair_in_hand and first == 1:
+                return 6
+            # pair
+            elif first == 1 or pair_in_hand:
+                return 8
+        # check same cards with second card in hand
+        elif first < second:
+            # four of a kind
+            if second == 3:
+                return 2
+            # three of a kind
+            elif second == 2:
+                return 6
+            # pair
+            elif second == 1:
+                return 8
 
     table = []
 
