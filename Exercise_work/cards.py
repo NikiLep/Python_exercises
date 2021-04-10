@@ -18,5 +18,5 @@ class Card:
         return self.suit
 
     def __str__(self):
-        return f'''{self.value}{self.suit}'''
+        return f'''{self.value} {self.suit}'''
 

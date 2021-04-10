@@ -117,7 +117,7 @@ def texas_game():
 
         deck.show_deck()
 
-        player.set_hand(deck.draw_card())
+
 
         # Gives everyone two cards at the beginning
         for i in players:

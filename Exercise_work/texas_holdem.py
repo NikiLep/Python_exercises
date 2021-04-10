@@ -1,4 +1,3 @@
-from collections import Counter
 
 from Exercise_work.player import Player
 from Exercise_work.deck import Deck
@@ -6,9 +5,18 @@ from Exercise_work.cards import Card
 
 
 def game():
-    # adds card to table
-    def add_to_table():
-        table.append(deck.draw_card())
+
+    # sorting function
+    def highest(list):
+        for step in range(1, len(list)):
+            key = list[step]
+            j = step - 1
+
+            while j >= 0 and key.get_value() > list[j].get_value():
+                list[j + 1] = list[j]
+                j = j - 1
+
+            list[j + 1] = key
 
     # Straight flush = 1
     # Four of a kind = 2
@@ -19,53 +27,67 @@ def game():
     # Two pair = 7
     # Pair = 8
     # High Card = 9
-    def check_pairs(hand):
-        first = 0
-        second = 0
-        r = 0
-        pair_in_hand = False
-        for c in hand:
-            r += 1
-            for i in table:
-                if c.get_value() == i.get_value():
-                    if r == 1:
-                        first += 1
-                    elif r == 2:
-                        second += 1
+    def check_pair(hand):
+        highest(hand)
 
-        if hand[0].get_value() == hand[1].get_value():
-            pair_in_hand = True
+        if len(hand) < 2:
+            return
+        elif hand[0].get_value() == hand[1].get_value():
+            score = 15 + hand[0].get_value()
+            print("pari")
+            return score
+        else:
+            check_pair(hand[1:])
 
-        # check for full house
-        if first == 2 and second == 1 or second == 2 and first == 1:
-            return 3
-        # check for two pairs
-        elif first == 1 and second == 1 and first != second:
-            return 7
-        # check same cards with first card in hand
-        elif first > second:
-            # four of a kind
-            if first == 3 or pair_in_hand and first == 2:
-                return 2
-            # three of a kind
-            elif first == 2 or pair_in_hand and first == 1:
-                return 6
-            # pair
-            elif first == 1 or pair_in_hand:
-                return 8
-        # check same cards with second card in hand
-        elif first < second:
-            # four of a kind
-            if second == 3:
-                return 2
-            # three of a kind
-            elif second == 2:
-                return 6
-            # pair
-            elif second == 1:
-                return 8
+    def check_triple(hand):
+        highest(hand)
 
-    table = []
+        if len(hand) < 3:
+            return
+        elif hand[0].get_value() == hand[1].get_value() == hand[2].get_value():
+            score = 45 + hand[0].get_value()
+            print("kolmoset")
+            return score
+        else:
+            check_triple(hand[1:])
+
+    def check_four(hand):
+        highest(hand)
+
+        if len(hand) < 4:
+            return
+        elif hand[0].get_value() == hand[1].get_value() == hand[2].get_value() == hand[3].get_value():
+            score = 105 + hand[0].get_value()
+            print("neloset")
+            return score
+        else:
+            check_four(hand[1:])
+
+    def check_two_pairs(hand):
+        highest(hand)
+        pairs = []
+
+        def check(hand2):
+            if len(hand2) < 2:
+                return
+            elif hand2[0].get_value() == hand2[1].get_value():
+                pairs.append(hand2[:2])
+            else:
+                check(hand2[1:])
+
+        check(hand)
+
+        if len(pairs) == 4:
+            score = 30
+            for i in pairs:
+                score + i.get_value()
+            print("kaksi paria")
+            return score
+        else:
+            return
+
+
+
 
     deck = Deck()
     # !!!!PLAYER POIS!!!!
@@ -83,21 +105,11 @@ def game():
 
     deck.shuffle_deck()
 
-    # Gives everyone two cards at the beginning
-    for n in range(2):
+    # Gives everyone 5 cards at the beginning
+    for n in range(5):
         for i in players_cards:
             i.append(deck.draw_card())
 
-    # Places three cards on the table
-    for c in range(3):
-        card = deck.draw_card()
-        table.append(card)
-
-    add_to_table()
-    add_to_table()
-
-    for i in table:
-        i.show_card()
 
     print()
 
@@ -106,7 +118,13 @@ def game():
         for c in i:
             c.show_card()
 
-    check_pairs(player_c)
+    print()
+
+
+    check_pair(player_c)
+    check_triple(player_c)
+    check_four(player_c)
+    check_two_pairs(player_c)
 
 
 game()
