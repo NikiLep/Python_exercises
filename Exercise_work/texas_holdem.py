@@ -18,15 +18,15 @@ def game():
 
             list[j + 1] = key
 
-    # Straight flush = 1
-    # Four of a kind = 2
-    # Full house = 3
-    # Flush = 4
-    # Straight = 5
-    # Three of a kind = 6
-    # Two pair = 7
-    # Pair = 8
-    # High Card = 9
+    # Straight flush = 120 - 134
+    # Four of a kind = 105 - 119
+    # Full house = 90 - 104
+    # Flush = 75 - 89
+    # Straight = 60 - 74
+    # Three of a kind = 45 - 59
+    # Two pair = 30 - 44
+    # Pair = 15 - 29
+    # High Card = 2 - 14
     def check_pair(hand):
         highest(hand)
 
@@ -67,25 +67,48 @@ def game():
         highest(hand)
         pairs = []
 
-        def check(hand2):
-            if len(hand2) < 2:
-                return
-            elif hand2[0].get_value() == hand2[1].get_value():
-                pairs.append(hand2[:2])
-            else:
-                check(hand2[1:])
+        if hand[0].get_value() == hand[1].get_value() and hand[2].get_value() == hand[3].get_value():
+            pairs.append(hand[0].get_value())
+            pairs.append(hand[1].get_value())
+            pairs.append(hand[2].get_value())
+            pairs.append(hand[3].get_value())
 
-        check(hand)
+        elif hand[0].get_value() == hand[1].get_value() and hand[3].get_value() == hand[4].get_value():
+            pairs.append(hand[0].get_value())
+            pairs.append(hand[1].get_value())
+            pairs.append(hand[3].get_value())
+            pairs.append(hand[4].get_value())
+
+        elif hand[1].get_value() == hand[2].get_value() and hand[3].get_value() == hand[4].get_value():
+            pairs.append(hand[1].get_value())
+            pairs.append(hand[2].get_value())
+            pairs.append(hand[3].get_value())
+            pairs.append(hand[4].get_value())
 
         if len(pairs) == 4:
-            score = 30
+            score = 0
+            print("kaks paria")
             for i in pairs:
-                score + i.get_value()
-            print("kaksi paria")
+                score += i
+
+            score = score / 4 + 30
+
             return score
+
+    def check_straight(hand):
+        highest(hand)
+
+        if (hand[0].get_value() - 1 == hand[1].get_value() and hand[1].get_value() - 1 == hand[2].get_value() and
+                hand[2].get_value() - 1 == hand[3].get_value() and hand[3].get_value() - 1 == hand[4].get_value()):
+
+            score = 60 + hand[0].get_value()
+            print("Suora")
+            return score
+
         else:
             return
 
+    def check_flush(hand):
 
 
 
@@ -106,9 +129,14 @@ def game():
     deck.shuffle_deck()
 
     # Gives everyone 5 cards at the beginning
-    for n in range(5):
-        for i in players_cards:
-            i.append(deck.draw_card())
+    # for n in range(5):
+        # for i in players_cards:
+            # i.append(deck.draw_card())
+    player_c.append(Card("Spades", 14))
+    player_c.append(Card("Spades", 13))
+    player_c.append(Card("Spades", 12))
+    player_c.append(Card("Spades", 11))
+    player_c.append(Card("Spades", 10))
 
 
     print()
@@ -125,6 +153,7 @@ def game():
     check_triple(player_c)
     check_four(player_c)
     check_two_pairs(player_c)
+    check_straight(player_c)
 
 
 game()
