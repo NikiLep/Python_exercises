@@ -106,11 +106,62 @@ def game():
             return score
 
         else:
-            return
+            return 0
 
     def check_flush(hand):
 
+        highest(hand)
 
+        if (hand[0].get_suit() == hand[1].get_suit() and hand[1].get_suit() == hand[2].get_suit() and
+                hand[2].get_suit() == hand[3].get_suit() and hand[3].get_suit() == hand[4].get_suit()):
+            score = 75 + hand[0].get_value()
+            print("Väri")
+            return score
+
+        else:
+            return 0
+
+    def check_straight_flush(hand):
+
+        if check_flush(hand) > 75 and check_straight(hand) > 60:
+            highest(hand)
+            score = 120 + hand[0].get_value()
+            print("Väri suora")
+
+        else:
+            return
+
+    def check_full_house(hand):
+        highest(hand)
+
+        score = 0
+
+        if (hand[0].get_value() == hand[1].get_value()
+                and hand[2].get_value() == hand[3].get_value() == hand[4].get_value()):
+
+            for i in hand:
+                score += i.get_value()
+
+            score /= 5
+            score += 90
+
+            print(score)
+            print("Täyskäsi")
+
+        elif (hand[0].get_value() == hand[1].get_value() == hand[2].get_value()
+              and hand[3].get_value() == hand[4].get_value()):
+
+            for i in hand:
+                score += i.get_value()
+
+            score /= 5
+            score += 90
+
+            print(score)
+            print("Täyskäsi")
+
+        else:
+            return
 
     deck = Deck()
     # !!!!PLAYER POIS!!!!
@@ -133,10 +184,10 @@ def game():
         # for i in players_cards:
             # i.append(deck.draw_card())
     player_c.append(Card("Spades", 14))
+    player_c.append(Card("Spades", 14))
+    player_c.append(Card("Spades", 14))
     player_c.append(Card("Spades", 13))
-    player_c.append(Card("Spades", 12))
-    player_c.append(Card("Spades", 11))
-    player_c.append(Card("Spades", 10))
+    player_c.append(Card("Spades", 13))
 
 
     print()
@@ -149,11 +200,7 @@ def game():
     print()
 
 
-    check_pair(player_c)
-    check_triple(player_c)
-    check_four(player_c)
-    check_two_pairs(player_c)
-    check_straight(player_c)
+    check_full_house(player_c)
 
 
 game()
