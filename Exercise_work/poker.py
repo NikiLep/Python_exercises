@@ -18,6 +18,17 @@ def game():
 
             list[j + 1] = key
 
+    def winner(list):
+        for step in range(1, len(list)):
+            key = list[step]
+            j = step - 1
+
+            while j >= 0 and key.get_score() > list[j].get_score():
+                list[j + 1] = list[j]
+                j = j - 1
+
+            list[j + 1] = key
+
     # Straight flush = 120 - 134
     # Four of a kind = 105 - 119
     # Full house = 90 - 104
@@ -34,8 +45,7 @@ def game():
             return 0
         elif hand[0].get_value() == hand[1].get_value():
             score = 15 + hand[0].get_value()
-            print("pari")
-            print(score)
+
             return score
         else:
             return check_pair(hand[1:])
@@ -47,8 +57,7 @@ def game():
             return 0
         elif hand[0].get_value() == hand[1].get_value() == hand[2].get_value():
             score = 45 + hand[0].get_value()
-            print("kolmoset")
-            print(score)
+
             return score
         else:
             return check_triple(hand[1:])
@@ -60,8 +69,7 @@ def game():
             return 0
         elif hand[0].get_value() == hand[1].get_value() == hand[2].get_value() == hand[3].get_value():
             score = 105 + hand[0].get_value()
-            print("neloset")
-            print(score)
+
             return score
         else:
             return check_four(hand[1:])
@@ -90,12 +98,10 @@ def game():
 
         if len(pairs) == 4:
             score = 0
-            print("kaks paria")
             for i in pairs:
                 score += i
 
             score = score / 4 + 30
-            print(score)
 
             return score
 
@@ -109,8 +115,7 @@ def game():
                 hand[2].get_value() - 1 == hand[3].get_value() and hand[3].get_value() - 1 == hand[4].get_value()):
 
             score = 60 + hand[0].get_value()
-            print("Suora")
-            print(score)
+
             return score
 
         else:
@@ -123,8 +128,7 @@ def game():
         if (hand[0].get_suit() == hand[1].get_suit() and hand[1].get_suit() == hand[2].get_suit() and
                 hand[2].get_suit() == hand[3].get_suit() and hand[3].get_suit() == hand[4].get_suit()):
             score = 75 + hand[0].get_value()
-            print("Väri")
-            print(score)
+
             return score
 
         else:
@@ -135,8 +139,7 @@ def game():
         if check_flush(hand) > 75 and check_straight(hand) > 60:
             highest(hand)
             score = 120 + hand[0].get_value()
-            print("Väri suora")
-            print(score)
+
             return score
 
         else:
@@ -156,8 +159,6 @@ def game():
             score /= 5
             score += 90
 
-            print("Täyskäsi")
-            print(score)
 
         elif (hand[0].get_value() == hand[1].get_value() == hand[2].get_value()
               and hand[3].get_value() == hand[4].get_value()):
@@ -168,8 +169,6 @@ def game():
             score /= 5
             score += 90
 
-            print("Täyskäsi")
-            print(score)
 
         else:
             return 0
@@ -187,16 +186,6 @@ def game():
         two_pairs = check_two_pairs(hand)
         pair = check_pair(hand)
 
-        print()
-        print(straight_flush)
-        print(four_of_a_kind)
-        print(full_house)
-        print(flush)
-        print(straight)
-        print(three_of_a_kind)
-        print(two_pairs)
-        print(pair)
-
         hands = [straight_flush, four_of_a_kind, full_house, flush, straight, three_of_a_kind, two_pairs, pair]
 
         for i in hands:
@@ -205,18 +194,18 @@ def game():
         print()
         print(score)
 
-        return
+        return score
 
 
 
     deck = Deck()
     # !!!!PLAYER POIS!!!!
-    player = Player()
-    computer1 = Player()
-    computer2 = Player()
-    computer3 = Player()
+    player = Player("Player")
+    computer1 = Player("C1")
+    computer2 = Player("C2")
+    computer3 = Player("C3")
 
-    players = [player, computer1, computer2, computer3]
+    players = [computer1, computer2, computer3, player]
     comp_c1 = []
     comp_c2 = []
     comp_c3 = []
@@ -234,12 +223,24 @@ def game():
 
     for i in players_cards:
         print()
-
+        pos = players_cards.index(i)
+        print(players[pos].get_name(), ":")
         for c in i:
             c.show_card()
 
     print()
 
-    check_best_hand(player_c)
+    computer1.set_score(check_best_hand(comp_c1))
+    computer2.set_score(check_best_hand(comp_c2))
+    computer3.set_score(check_best_hand(comp_c3))
+    player.set_score(check_best_hand(player_c))
+
+    winner(players)
+
+
+    print("Winner is ", players[0].get_name())
+
+
+
 
 game()

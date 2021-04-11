@@ -3,11 +3,11 @@
 # Description:  Class for keeping up who is playing and their money
 
 class Player:
-    def __init__(self):
+    def __init__(self, name):
         self.__money = 100
         self.__player_ID = 0
-        self.__name = ""
-
+        self.__name = name
+        self.__score = 0
 
     def set_money(self, money):
         self.__money = money
@@ -18,6 +18,9 @@ class Player:
     def set_name(self, name):
         self.__name = name
 
+    def set_score(self, score):
+        self.__score = score
+
     def get_money(self):
         return self.__money
 
@@ -27,6 +30,8 @@ class Player:
     def get_name(self):
         return self.__name
 
+    def get_score(self):
+        return self.__score
 
     def __str__(self):
         return f"""Money: {self.__money}"""
