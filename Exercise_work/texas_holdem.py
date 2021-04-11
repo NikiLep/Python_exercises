@@ -31,37 +31,40 @@ def game():
         highest(hand)
 
         if len(hand) < 2:
-            return
+            return 0
         elif hand[0].get_value() == hand[1].get_value():
             score = 15 + hand[0].get_value()
             print("pari")
+            print(score)
             return score
         else:
-            check_pair(hand[1:])
+            return check_pair(hand[1:])
 
     def check_triple(hand):
         highest(hand)
 
         if len(hand) < 3:
-            return
+            return 0
         elif hand[0].get_value() == hand[1].get_value() == hand[2].get_value():
             score = 45 + hand[0].get_value()
             print("kolmoset")
+            print(score)
             return score
         else:
-            check_triple(hand[1:])
+            return check_triple(hand[1:])
 
     def check_four(hand):
         highest(hand)
 
         if len(hand) < 4:
-            return
+            return 0
         elif hand[0].get_value() == hand[1].get_value() == hand[2].get_value() == hand[3].get_value():
             score = 105 + hand[0].get_value()
             print("neloset")
+            print(score)
             return score
         else:
-            check_four(hand[1:])
+            return check_four(hand[1:])
 
     def check_two_pairs(hand):
         highest(hand)
@@ -92,8 +95,12 @@ def game():
                 score += i
 
             score = score / 4 + 30
+            print(score)
 
             return score
+
+        else:
+            return 0
 
     def check_straight(hand):
         highest(hand)
@@ -103,6 +110,7 @@ def game():
 
             score = 60 + hand[0].get_value()
             print("Suora")
+            print(score)
             return score
 
         else:
@@ -116,6 +124,7 @@ def game():
                 hand[2].get_suit() == hand[3].get_suit() and hand[3].get_suit() == hand[4].get_suit()):
             score = 75 + hand[0].get_value()
             print("Väri")
+            print(score)
             return score
 
         else:
@@ -127,9 +136,11 @@ def game():
             highest(hand)
             score = 120 + hand[0].get_value()
             print("Väri suora")
+            print(score)
+            return score
 
         else:
-            return
+            return 0
 
     def check_full_house(hand):
         highest(hand)
@@ -145,8 +156,8 @@ def game():
             score /= 5
             score += 90
 
-            print(score)
             print("Täyskäsi")
+            print(score)
 
         elif (hand[0].get_value() == hand[1].get_value() == hand[2].get_value()
               and hand[3].get_value() == hand[4].get_value()):
@@ -157,11 +168,46 @@ def game():
             score /= 5
             score += 90
 
-            print(score)
             print("Täyskäsi")
+            print(score)
 
         else:
-            return
+            return 0
+
+    def check_best_hand(hand):
+
+        score = 0
+
+        straight_flush = check_straight_flush(hand)
+        four_of_a_kind = check_four(hand)
+        full_house = check_full_house(hand)
+        flush = check_flush(hand)
+        straight = check_straight(hand)
+        three_of_a_kind = check_triple(hand)
+        two_pairs = check_two_pairs(hand)
+        pair = check_pair(hand)
+
+        print()
+        print(straight_flush)
+        print(four_of_a_kind)
+        print(full_house)
+        print(flush)
+        print(straight)
+        print(three_of_a_kind)
+        print(two_pairs)
+        print(pair)
+
+        hands = [straight_flush, four_of_a_kind, full_house, flush, straight, three_of_a_kind, two_pairs, pair]
+
+        for i in hands:
+            if i > score:
+                score = i
+        print()
+        print(score)
+
+        return
+
+
 
     deck = Deck()
     # !!!!PLAYER POIS!!!!
@@ -180,27 +226,20 @@ def game():
     deck.shuffle_deck()
 
     # Gives everyone 5 cards at the beginning
-    # for n in range(5):
-        # for i in players_cards:
-            # i.append(deck.draw_card())
-    player_c.append(Card("Spades", 14))
-    player_c.append(Card("Spades", 14))
-    player_c.append(Card("Spades", 14))
-    player_c.append(Card("Spades", 13))
-    player_c.append(Card("Spades", 13))
-
+    for n in range(5):
+        for i in players_cards:
+            i.append(deck.draw_card())
 
     print()
 
     for i in players_cards:
         print()
+
         for c in i:
             c.show_card()
 
     print()
 
-
-    check_full_house(player_c)
-
+    check_best_hand(player_c)
 
 game()
