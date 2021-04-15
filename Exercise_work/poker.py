@@ -202,20 +202,34 @@ def game():
 
         score = 0
 
-        straight_flush = check_straight_flush(hand)
-        four_of_a_kind = check_four(hand)
-        full_house = check_full_house(hand)
-        flush = check_flush(hand)
-        straight = check_straight(hand)
-        three_of_a_kind = check_triple(hand)
-        two_pairs = check_two_pairs(hand)
-        pair = check_pair(hand)
+        if check_straight_flush(hand) != 0:
+            score = check_straight_flush(hand)
 
-        hands = [straight_flush, four_of_a_kind, full_house, flush, straight, three_of_a_kind, two_pairs, pair]
+        elif check_four(hand) != 0 and score == 0:
+            score = check_four(hand)
 
-        for i in hands:
-            if i > score:
-                score = i
+        elif check_full_house(hand) != 0 and score == 0:
+            score = check_full_house(hand)
+
+        elif check_flush(hand) != 0 and score == 0:
+            score = check_flush(hand)
+
+        elif check_straight(hand) != 0 and score == 0:
+            score = check_straight(hand)
+
+        elif check_triple(hand) != 0 and score == 0:
+            score = check_triple(hand)
+
+        elif check_two_pairs(hand) != 0 and score == 0:
+            score = check_two_pairs(hand)
+
+        elif check_pair(hand) != 0 and score == 0:
+            score = check_pair(hand)
+
+        else:
+            highest(hand)
+            score = hand[0].get_value()
+
         print()
         print(score)
 

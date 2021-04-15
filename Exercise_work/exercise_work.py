@@ -94,24 +94,6 @@ def poker():
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def dice_game():
     # function to get bet amount from entry box
     def game_bet():
