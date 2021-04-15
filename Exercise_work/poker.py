@@ -5,6 +5,7 @@
 from Exercise_work.player import Player
 from Exercise_work.deck import Deck
 from Exercise_work.cards import Card
+from Exercise_work import exercise_work
 
 
 def game():
@@ -237,7 +238,7 @@ def game():
 
     # Builds deck and creates all the players
     deck = Deck()
-    player = Player("Player")
+    player = exercise_work.player
     computer1 = Player("C1")
     computer2 = Player("C2")
     computer3 = Player("C3")
@@ -283,4 +284,3 @@ def game():
     print("Winner is ", players[0].get_name())
 
 
-game()
