@@ -9,7 +9,7 @@ import tkinter.messagebox
 from time import strftime
 from tkinter import *
 from tkinter.ttk import *
-from PIL import ImageTk,Image
+from PIL import ImageTk, Image
 
 from Exercise_work.paint_app import paint
 from Exercise_work.alarm_clock import AlarmClock
@@ -343,7 +343,30 @@ def poker_game():
 
             return suit[card.get_value()-2]
 
+        # card image labels
+        player_card1 = Label(poker, image=show_card(player_c[0]))
+        player_card2 = Label(poker, image=show_card(player_c[1]))
+        player_card3 = Label(poker, image=show_card(player_c[2]))
+        player_card4 = Label(poker, image=show_card(player_c[3]))
+        player_card5 = Label(poker, image=show_card(player_c[4]))
 
+        #player_card1.place(x=420, y=620)
+        #player_card2.place(x=530, y=620)
+        #player_card3.place(x=640, y=620)
+        #player_card4.place(x=750, y=620)
+        #player_card5.place(x=860, y=620)
+
+        check1 = Button(poker, text="Switch", width=15, image=show_card(player_c[0]))
+        check2 = Button(poker, text="Switch", width=15, image=show_card(player_c[1]))
+        check3 = Button(poker, text="Switch", width=15, image=show_card(player_c[2]))
+        check4 = Button(poker, text="Switch", width=15, image=show_card(player_c[3]))
+        check5 = Button(poker, text="Switch", width=15, image=show_card(player_c[4]))
+
+        check1.place(x=420, y=620)
+        check2.place(x=530, y=620)
+        check3.place(x=640, y=620)
+        check4.place(x=750, y=620)
+        check5.place(x=860, y=620)
 
     def check_winner():
         # checks every players best hand and gives them score from it
@@ -390,11 +413,6 @@ def poker_game():
 
     switch_button = Button(poker, text='Switch')
 
-    check1 = Checkbutton(poker, onvalue=1, offvalue=0)
-    check2 = Checkbutton(poker, onvalue=1, offvalue=0)
-    check3 = Checkbutton(poker, onvalue=1, offvalue=0)
-    check4 = Checkbutton(poker, onvalue=1, offvalue=0)
-    check5 = Checkbutton(poker, onvalue=1, offvalue=0)
 
     # all the pics of cards
     # Spades
@@ -473,7 +491,6 @@ def poker_game():
     comp_c3 = []
     player_c = []
     players_cards = [comp_c1, comp_c2, comp_c3, player_c]
-
 
 
 def dice_game():
