@@ -343,30 +343,63 @@ def poker_game():
 
             return suit[card.get_value()-2]
 
-        # card image labels
-        player_card1 = Label(poker, image=show_card(player_c[0]))
-        player_card2 = Label(poker, image=show_card(player_c[1]))
-        player_card3 = Label(poker, image=show_card(player_c[2]))
-        player_card4 = Label(poker, image=show_card(player_c[3]))
-        player_card5 = Label(poker, image=show_card(player_c[4]))
 
-        #player_card1.place(x=420, y=620)
-        #player_card2.place(x=530, y=620)
-        #player_card3.place(x=640, y=620)
-        #player_card4.place(x=750, y=620)
-        #player_card5.place(x=860, y=620)
 
-        check1 = Button(poker, text="Switch", width=15, image=show_card(player_c[0]))
-        check2 = Button(poker, text="Switch", width=15, image=show_card(player_c[1]))
-        check3 = Button(poker, text="Switch", width=15, image=show_card(player_c[2]))
-        check4 = Button(poker, text="Switch", width=15, image=show_card(player_c[3]))
-        check5 = Button(poker, text="Switch", width=15, image=show_card(player_c[4]))
+        def checkbuttons():
+            check1 = Checkbutton(poker, text="Switch", width=15, image=show_card(player_c[0]), onvalue=1, offvalue=0)
+            check2 = Checkbutton(poker, text="Switch", width=15, image=show_card(player_c[1]), onvalue=1, offvalue=0)
+            check3 = Checkbutton(poker, text="Switch", width=15, image=show_card(player_c[2]), onvalue=1, offvalue=0)
+            check4 = Checkbutton(poker, text="Switch", width=15, image=show_card(player_c[3]), onvalue=1, offvalue=0)
+            check5 = Checkbutton(poker, text="Switch", width=15, image=show_card(player_c[4]), onvalue=1, offvalue=0)
 
-        check1.place(x=420, y=620)
-        check2.place(x=530, y=620)
-        check3.place(x=640, y=620)
-        check4.place(x=750, y=620)
-        check5.place(x=860, y=620)
+            check1.place(x=410, y=620)
+            check2.place(x=530, y=620)
+            check3.place(x=650, y=620)
+            check4.place(x=770, y=620)
+            check5.place(x=890, y=620)
+
+            def switch():
+                if check1.instate(['selected']):
+                    player_c[0] = deck.draw_card()
+                    print(player_c[0])
+
+                if check2.instate(['selected']):
+                    player_c[1] = deck.draw_card()
+
+                if check3.instate(['selected']):
+                    player_c[2] = deck.draw_card()
+
+                if check4.instate(['selected']):
+                    player_c[3] = deck.draw_card()
+
+                if check5.instate(['selected']):
+                    player_c[4] = deck.draw_card()
+
+                check1.destroy()
+                check2.destroy()
+                check3.destroy()
+                check4.destroy()
+                check5.destroy()
+
+                check11 = Button(poker, text="Switch", width=15, image=show_card(player_c[0]))
+                check22 = Button(poker, text="Switch", width=15, image=show_card(player_c[1]))
+                check33 = Button(poker, text="Switch", width=15, image=show_card(player_c[2]))
+                check44 = Button(poker, text="Switch", width=15, image=show_card(player_c[3]))
+                check55 = Button(poker, text="Switch", width=15, image=show_card(player_c[4]))
+
+                check11.place(x=410, y=620)
+                check22.place(x=530, y=620)
+                check33.place(x=650, y=620)
+                check44.place(x=770, y=620)
+                check55.place(x=890, y=620)
+
+                switch_button.destroy()
+
+            switch_button = Button(poker, text='Switch', command=switch)
+            switch_button.place(x=1030, y=700)
+
+        checkbuttons()
+
 
     def check_winner():
         # checks every players best hand and gives them score from it
@@ -411,7 +444,7 @@ def poker_game():
     poker_button = Button(poker, text="Play", command=create_game, width=30)
     poker_button.place(x=5, y=775)
 
-    switch_button = Button(poker, text='Switch')
+
 
 
     # all the pics of cards
