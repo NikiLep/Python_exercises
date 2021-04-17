@@ -82,6 +82,7 @@ def alarm_clock_app():
     set_alarm.place(y=60, x=88)
 
 
+# Replacement task Exercise7 Task 4c
 def poker_game():
     # sorting function
     def highest(list):
