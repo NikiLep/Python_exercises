@@ -16,7 +16,7 @@ from Exercise_work.alarm_clock import AlarmClock
 from Exercise_work.player import Player
 from Exercise_work.dice import Dice
 from Exercise_work.deck import Deck
-from Exercise_work.cards import Card
+
 
 root = Tk()
 root.geometry('200x400')
@@ -309,8 +309,36 @@ def poker_game():
 
         return score
 
+    def check_winner():
+        # checks every players best hand and gives them score from it
+        computer1.set_score(check_best_hand(comp_c1))
+        computer2.set_score(check_best_hand(comp_c2))
+        computer3.set_score(check_best_hand(comp_c3))
+        player.set_score(check_best_hand(player_c))
+
+        # tells who is the winner
+        winner(players)
+
+        print("Winner is ", players[0].get_name())
+
+        return players[0].get_name()
+
+    def game_bet():
+        bet_size = int("%s" % (poker_bet.get()))
+        return bet_size
+
+    def play_again():
+        poker.destroy()
+        poker_game()
+
     # Shuffle deck and give cards
     def create_game():
+
+        bet = game_bet()
+        player.set_money(player.get_money()-bet)
+
+        new_game_button = Button(poker, text="New game", command=play_again, width=30)
+        new_game_button.place(x=5, y=740)
 
         # shuffles the deck
         deck.shuffle_deck()
@@ -330,6 +358,8 @@ def poker_game():
             for c in i:
                 c.show_card()
 
+
+        # function for getting right picture for card value
         def show_card(card):
             suit = []
             if card.get_suit() == "Clubs":
@@ -343,9 +373,9 @@ def poker_game():
 
             return suit[card.get_value()-2]
 
-
-
+        # shows players cards and makes checkboxes for player to choose which cards to switch
         def checkbuttons():
+            # players cards
             check1 = Checkbutton(poker, text="Switch", width=15, image=show_card(player_c[0]), onvalue=1, offvalue=0)
             check2 = Checkbutton(poker, text="Switch", width=15, image=show_card(player_c[1]), onvalue=1, offvalue=0)
             check3 = Checkbutton(poker, text="Switch", width=15, image=show_card(player_c[2]), onvalue=1, offvalue=0)
@@ -358,6 +388,53 @@ def poker_game():
             check4.place(x=770, y=620)
             check5.place(x=890, y=620)
 
+            # computers cards
+            c1_card1 = Label(poker, image=card_back)
+            c1_card2 = Label(poker, image=card_back)
+            c1_card3 = Label(poker, image=card_back)
+            c1_card4 = Label(poker, image=card_back)
+            c1_card5 = Label(poker, image=card_back)
+
+            c1_card1.place(x=250, y=40)
+            c1_card2.place(x=360, y=40)
+            c1_card3.place(x=470, y=40)
+            c1_card4.place(x=580, y=40)
+            c1_card5.place(x=690, y=40)
+
+            c1_label = Label(poker, text="Computer 1 cards", font=('calibri', 16, 'bold'), background='dark green')
+            c1_label.place(x=820, y=90)
+
+            c2_card1 = Label(poker, image=card_back)
+            c2_card2 = Label(poker, image=card_back)
+            c2_card3 = Label(poker, image=card_back)
+            c2_card4 = Label(poker, image=card_back)
+            c2_card5 = Label(poker, image=card_back)
+
+            c2_card1.place(x=250, y=230)
+            c2_card2.place(x=360, y=230)
+            c2_card3.place(x=470, y=230)
+            c2_card4.place(x=580, y=230)
+            c2_card5.place(x=690, y=230)
+
+            c2_label = Label(poker, text="Computer 2 cards", font=('calibri', 16, 'bold'), background='dark green')
+            c2_label.place(x=820, y=280)
+
+            c3_card1 = Label(poker, image=card_back)
+            c3_card2 = Label(poker, image=card_back)
+            c3_card3 = Label(poker, image=card_back)
+            c3_card4 = Label(poker, image=card_back)
+            c3_card5 = Label(poker, image=card_back)
+
+            c3_card1.place(x=250, y=420)
+            c3_card2.place(x=360, y=420)
+            c3_card3.place(x=470, y=420)
+            c3_card4.place(x=580, y=420)
+            c3_card5.place(x=690, y=420)
+
+            c3_label = Label(poker, text="Computer 3 cards", font=('calibri', 16, 'bold'), background='dark green')
+            c3_label.place(x=820, y=470)
+
+            # function for switching certain cards
             def switch():
                 if check1.instate(['selected']):
                     player_c[0] = deck.draw_card()
@@ -375,17 +452,37 @@ def poker_game():
                 if check5.instate(['selected']):
                     player_c[4] = deck.draw_card()
 
+                # destroying old pictures to get the new ones to show up
                 check1.destroy()
                 check2.destroy()
                 check3.destroy()
                 check4.destroy()
                 check5.destroy()
 
-                check11 = Button(poker, text="Switch", width=15, image=show_card(player_c[0]))
-                check22 = Button(poker, text="Switch", width=15, image=show_card(player_c[1]))
-                check33 = Button(poker, text="Switch", width=15, image=show_card(player_c[2]))
-                check44 = Button(poker, text="Switch", width=15, image=show_card(player_c[3]))
-                check55 = Button(poker, text="Switch", width=15, image=show_card(player_c[4]))
+                c1_card1.destroy()
+                c1_card2.destroy()
+                c1_card3.destroy()
+                c1_card4.destroy()
+                c1_card5.destroy()
+
+                c1_card1.destroy()
+                c1_card2.destroy()
+                c1_card3.destroy()
+                c1_card4.destroy()
+                c1_card5.destroy()
+
+                c1_card1.destroy()
+                c1_card2.destroy()
+                c1_card3.destroy()
+                c1_card4.destroy()
+                c1_card5.destroy()
+
+                # updated cards/switched cards
+                check11 = Button(poker, width=15, image=show_card(player_c[0]))
+                check22 = Button(poker, width=15, image=show_card(player_c[1]))
+                check33 = Button(poker, width=15, image=show_card(player_c[2]))
+                check44 = Button(poker, width=15, image=show_card(player_c[3]))
+                check55 = Button(poker, width=15, image=show_card(player_c[4]))
 
                 check11.place(x=410, y=620)
                 check22.place(x=530, y=620)
@@ -393,34 +490,75 @@ def poker_game():
                 check44.place(x=770, y=620)
                 check55.place(x=890, y=620)
 
+                # computers cards flipped
+                c1_card11 = Label(poker, image=show_card(comp_c1[0]))
+                c1_card22 = Label(poker, image=show_card(comp_c1[1]))
+                c1_card33 = Label(poker, image=show_card(comp_c1[2]))
+                c1_card44 = Label(poker, image=show_card(comp_c1[3]))
+                c1_card55 = Label(poker, image=show_card(comp_c1[4]))
+
+                c1_card11.place(x=250, y=40)
+                c1_card22.place(x=360, y=40)
+                c1_card33.place(x=470, y=40)
+                c1_card44.place(x=580, y=40)
+                c1_card55.place(x=690, y=40)
+
+                c2_card11 = Label(poker, image=show_card(comp_c2[0]))
+                c2_card22 = Label(poker, image=show_card(comp_c2[1]))
+                c2_card33 = Label(poker, image=show_card(comp_c2[2]))
+                c2_card44 = Label(poker, image=show_card(comp_c2[3]))
+                c2_card55 = Label(poker, image=show_card(comp_c2[4]))
+
+                c2_card11.place(x=250, y=230)
+                c2_card22.place(x=360, y=230)
+                c2_card33.place(x=470, y=230)
+                c2_card44.place(x=580, y=230)
+                c2_card55.place(x=690, y=230)
+
+                c3_card11 = Label(poker, image=show_card(comp_c3[0]))
+                c3_card22 = Label(poker, image=show_card(comp_c3[1]))
+                c3_card33 = Label(poker, image=show_card(comp_c3[2]))
+                c3_card44 = Label(poker, image=show_card(comp_c3[3]))
+                c3_card55 = Label(poker, image=show_card(comp_c3[4]))
+
+                c3_card11.place(x=250, y=420)
+                c3_card22.place(x=360, y=420)
+                c3_card33.place(x=470, y=420)
+                c3_card44.place(x=580, y=420)
+                c3_card55.place(x=690, y=420)
+
+                # destroys switch button, so player can't switch again
                 switch_button.destroy()
 
+                # checks winner and makes announcement
+                game_winner = check_winner()
+                winner_label = Label(poker, text="Winner", font=('calibri', 16, 'bold'), background='dark green',
+                                     foreground='white')
+                if game_winner == "C1":
+                    winner_label.place(x=1000, y=90)
+                elif game_winner == "C2":
+                    winner_label.place(x=1000, y=280)
+                elif game_winner == "C3":
+                    winner_label.place(x=1000, y=470)
+                elif game_winner == "Player":
+                    winner_label = Label(poker, text="You won", font=('calibri', 26, 'bold'), background='dark green',
+                                         foreground='white')
+                    winner_label.place(x=240, y=700)
+
+                    # if player wins, he gets four times of his/her bet, otherwise loses it
+                    player.set_money(player.get_money()+bet*4)
+
+            # creates switch button
             switch_button = Button(poker, text='Switch', command=switch)
             switch_button.place(x=1030, y=700)
 
         checkbuttons()
 
-
-    def check_winner():
-        # checks every players best hand and gives them score from it
-        computer1.set_score(check_best_hand(comp_c1))
-        computer2.set_score(check_best_hand(comp_c2))
-        computer3.set_score(check_best_hand(comp_c3))
-        player.set_score(check_best_hand(player_c))
-
-        # tells who is the winner
-        winner(players)
-
-        print("Winner is ", players[0].get_name())
-
+    # function to keep track of players money
     def money_amount_p():
         money = player
         money_lbl_p.config(text=money)
         money_lbl_p.after(1000, money_amount)
-
-    def game_bet():
-        bet_size = int("%s" % (poker_bet.get()))
-        return bet_size
 
     poker = Toplevel(root)
     poker.title("Poker")
@@ -431,21 +569,22 @@ def poker_game():
     canvas.create_line(200, 0, 200, 800, fill='black')
     canvas.pack()
 
+    # adds money label to show player how much money he/she has
     money_lbl_p = Label(poker, font=('calibri', 16, 'bold'), background='green')
     money_lbl_p.place(x=2, y=616)
     money_amount_p()
 
+    # entry widget for bet
     poker_bet = Entry(poker, width=12)
     poker_bet.place(x=5, y=690)
 
+    # label to point out where entry widget for bet is
     bet_lbl = Label(poker, text="Bet amount", font=('calibri', 14, 'bold'), background='green')
     bet_lbl.place(x=3, y=660)
 
+    # creates play button to start the game
     poker_button = Button(poker, text="Play", command=create_game, width=30)
     poker_button.place(x=5, y=775)
-
-
-
 
     # all the pics of cards
     # Spades
@@ -505,6 +644,8 @@ def poker_game():
     h13 = ImageTk.PhotoImage(Image.open("C:/Users/Niki/Desktop/Olio-ohjelmointi/Images/cards/K-h.png"))
     h14 = ImageTk.PhotoImage(Image.open("C:/Users/Niki/Desktop/Olio-ohjelmointi/Images/cards/A-h.png"))
 
+    card_back = ImageTk.PhotoImage(Image.open("C:/Users/Niki/Desktop/Olio-ohjelmointi/Images/card_back.png"))
+
     spades = [s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14]
     clubs = [c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14]
     diamonds = [d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14]
@@ -524,6 +665,16 @@ def poker_game():
     comp_c3 = []
     player_c = []
     players_cards = [comp_c1, comp_c2, comp_c3, player_c]
+
+    # game instructions
+    instructions = 'GAME OF POKER\nFirst enter your bet\nand click "Play" button\nto start.\nAfter that you ' \
+                   'have a\nchange to pick all to\n' \
+                   'switch cards from your\nhand to make it better.\nAfter pressing cards you\nyou want to change,\n' \
+                   'press "Switch" button.\nAfter that, you are\nable to see other\nplayers cards and who\nis the' \
+                   'winner.\nIf you want to play\nagain, press "New game".'
+
+    inst_label = Label(poker, text=instructions, font=('calibri', 12, 'bold'), background='green')
+    inst_label.place(x=5, y=5)
 
 
 def dice_game():
@@ -621,7 +772,7 @@ time_lbl.pack(anchor='ne')
 current_time()
 
 # keeps track on players money
-player = Player("player")
+player = Player("Player")
 
 money_lbl = Label(root, font=('calibri', 10, 'bold'))
 money_lbl.place(x=0, y=0)
