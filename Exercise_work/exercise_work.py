@@ -699,13 +699,16 @@ def dice_game():
         if computer_total > player_total:
             player.set_money(player.get_money()-game_bet())
             lose_lbl.place(x=355, y=260)
+            lose_lbl.after(2000, lose_lbl.place_forget)
 
         elif player_total > computer_total:
             player.set_money(player.get_money()+game_bet())
             win_lbl.place(x=355, y=260)
+            win_lbl.after(2000, win_lbl.place_forget)
 
         else:
             tie_lbl.place(x=355, y=260)
+            tie_lbl.after(2000, tie_lbl.place_forget)
 
         # show rolled dices
 
