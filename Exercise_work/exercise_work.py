@@ -83,248 +83,234 @@ def alarm_clock_app():
 
 
 def poker_game():
-    def game():
+    # sorting function
+    def highest(list):
+        for step in range(1, len(list)):
+            key = list[step]
+            j = step - 1
 
-        # sorting function
-        def highest(list):
-            for step in range(1, len(list)):
-                key = list[step]
-                j = step - 1
+            while j >= 0 and key.get_value() > list[j].get_value():
+                list[j + 1] = list[j]
+                j = j - 1
 
-                while j >= 0 and key.get_value() > list[j].get_value():
-                    list[j + 1] = list[j]
-                    j = j - 1
+            list[j + 1] = key
 
-                list[j + 1] = key
+    # finds player with best hand/score
+    def winner(list):
+        for step in range(1, len(list)):
+            key = list[step]
+            j = step - 1
 
-        # finds player with best hand/score
-        def winner(list):
-            for step in range(1, len(list)):
-                key = list[step]
-                j = step - 1
+            while j >= 0 and key.get_score() > list[j].get_score():
+                list[j + 1] = list[j]
+                j = j - 1
 
-                while j >= 0 and key.get_score() > list[j].get_score():
-                    list[j + 1] = list[j]
-                    j = j - 1
+            list[j + 1] = key
 
-                list[j + 1] = key
+    # Scoring of hands:
+    # Straight flush = 120 - 134
+    # Four of a kind = 105 - 119
+    # Full house = 90 - 104
+    # Flush = 75 - 89
+    # Straight = 60 - 74
+    # Three of a kind = 45 - 59
+    # Two pair = 30 - 44
+    # Pair = 15 - 29
+    # High Card = 2 - 14
 
-        # Scoring of hands:
-        # Straight flush = 120 - 134
-        # Four of a kind = 105 - 119
-        # Full house = 90 - 104
-        # Flush = 75 - 89
-        # Straight = 60 - 74
-        # Three of a kind = 45 - 59
-        # Two pair = 30 - 44
-        # Pair = 15 - 29
-        # High Card = 2 - 14
+    # Checks for pair
+    def check_pair(hand):
+        # puts cards in order from highest to lowest value
+        highest(hand)
 
-        # Checks for pair
-        def check_pair(hand):
-            # puts cards in order from highest to lowest value
-            highest(hand)
+        if len(hand) < 2:
+            return 0
+        elif hand[0].get_value() == hand[1].get_value():
+            score = 15 + hand[0].get_value()
 
-            if len(hand) < 2:
-                return 0
-            elif hand[0].get_value() == hand[1].get_value():
-                score = 15 + hand[0].get_value()
+            return score
+        else:
+            return check_pair(hand[1:])
 
-                return score
-            else:
-                return check_pair(hand[1:])
+    # Checks for three of a kind
+    def check_triple(hand):
+        # puts cards in order from highest to lowest value
+        highest(hand)
 
-        # Checks for three of a kind
-        def check_triple(hand):
-            # puts cards in order from highest to lowest value
-            highest(hand)
+        if len(hand) < 3:
+            return 0
+        elif hand[0].get_value() == hand[1].get_value() == hand[2].get_value():
+            score = 45 + hand[0].get_value()
 
-            if len(hand) < 3:
-                return 0
-            elif hand[0].get_value() == hand[1].get_value() == hand[2].get_value():
-                score = 45 + hand[0].get_value()
+            return score
+        else:
+            return check_triple(hand[1:])
 
-                return score
-            else:
-                return check_triple(hand[1:])
+    # Checks for fours of a kind
+    def check_four(hand):
+        # puts cards in order from highest to lowest value
+        highest(hand)
 
-        # Checks for fours of a kind
-        def check_four(hand):
-            # puts cards in order from highest to lowest value
-            highest(hand)
+        if len(hand) < 4:
+            return 0
+        elif hand[0].get_value() == hand[1].get_value() == hand[2].get_value() == hand[3].get_value():
+            score = 105 + hand[0].get_value()
 
-            if len(hand) < 4:
-                return 0
-            elif hand[0].get_value() == hand[1].get_value() == hand[2].get_value() == hand[3].get_value():
-                score = 105 + hand[0].get_value()
+            return score
+        else:
+            return check_four(hand[1:])
 
-                return score
-            else:
-                return check_four(hand[1:])
+    # Checks for two pairs
+    def check_two_pairs(hand):
+        # puts cards in order from highest to lowest value
+        highest(hand)
+        pairs = []
 
-        # Checks for two pairs
-        def check_two_pairs(hand):
-            # puts cards in order from highest to lowest value
-            highest(hand)
-            pairs = []
+        # adds pairs to pairs list
+        if hand[0].get_value() == hand[1].get_value() and hand[2].get_value() == hand[3].get_value():
+            pairs.append(hand[0].get_value())
+            pairs.append(hand[1].get_value())
+            pairs.append(hand[2].get_value())
+            pairs.append(hand[3].get_value())
 
-            # adds pairs to pairs list
-            if hand[0].get_value() == hand[1].get_value() and hand[2].get_value() == hand[3].get_value():
-                pairs.append(hand[0].get_value())
-                pairs.append(hand[1].get_value())
-                pairs.append(hand[2].get_value())
-                pairs.append(hand[3].get_value())
+        elif hand[0].get_value() == hand[1].get_value() and hand[3].get_value() == hand[4].get_value():
+            pairs.append(hand[0].get_value())
+            pairs.append(hand[1].get_value())
+            pairs.append(hand[3].get_value())
+            pairs.append(hand[4].get_value())
 
-            elif hand[0].get_value() == hand[1].get_value() and hand[3].get_value() == hand[4].get_value():
-                pairs.append(hand[0].get_value())
-                pairs.append(hand[1].get_value())
-                pairs.append(hand[3].get_value())
-                pairs.append(hand[4].get_value())
+        elif hand[1].get_value() == hand[2].get_value() and hand[3].get_value() == hand[4].get_value():
+            pairs.append(hand[1].get_value())
+            pairs.append(hand[2].get_value())
+            pairs.append(hand[3].get_value())
+            pairs.append(hand[4].get_value())
 
-            elif hand[1].get_value() == hand[2].get_value() and hand[3].get_value() == hand[4].get_value():
-                pairs.append(hand[1].get_value())
-                pairs.append(hand[2].get_value())
-                pairs.append(hand[3].get_value())
-                pairs.append(hand[4].get_value())
-
-            # checks if there is two pairs in pairs list and gives score depending on both pair values
-            if len(pairs) == 4:
-                score = 0
-                for i in pairs:
-                    score += i
-
-                score = score / 4 + 30
-
-                return score
-
-            else:
-                return 0
-
-        # Checks for straight
-        def check_straight(hand):
-            # puts cards in order from highest to lowest value
-            highest(hand)
-
-            if (hand[0].get_value() - 1 == hand[1].get_value() and hand[1].get_value() - 1 == hand[2].get_value() and
-                    hand[2].get_value() - 1 == hand[3].get_value() and hand[3].get_value() - 1 == hand[4].get_value()):
-
-                score = 60 + hand[0].get_value()
-
-                return score
-
-            else:
-                return 0
-
-        # checks for flush
-        def check_flush(hand):
-            # puts cards in order from highest to lowest value
-            highest(hand)
-
-            if (hand[0].get_suit() == hand[1].get_suit() and hand[1].get_suit() == hand[2].get_suit() and
-                    hand[2].get_suit() == hand[3].get_suit() and hand[3].get_suit() == hand[4].get_suit()):
-
-                score = 75 + hand[0].get_value()
-
-                return score
-
-            else:
-                return 0
-
-        # Checks for straight flush
-        def check_straight_flush(hand):
-
-            if check_flush(hand) > 75 and check_straight(hand) > 60:
-                # puts cards in order from highest to lowest value
-                highest(hand)
-
-                score = 120 + hand[0].get_value()
-
-                return score
-
-            else:
-                return 0
-
-        # Checks for full house
-        def check_full_house(hand):
-            # puts cards in order from highest to lowest value
-            highest(hand)
-
+        # checks if there is two pairs in pairs list and gives score depending on both pair values
+        if len(pairs) == 4:
             score = 0
+            for i in pairs:
+                score += i
 
-            # checks for possible ways to get full house with five cards
-            if (hand[0].get_value() == hand[1].get_value()
-                    and hand[2].get_value() == hand[3].get_value() == hand[4].get_value()):
-
-                for i in hand:
-                    score += i.get_value()
-
-                score /= 5
-                score += 90
-
-            elif (hand[0].get_value() == hand[1].get_value() == hand[2].get_value()
-                  and hand[3].get_value() == hand[4].get_value()):
-
-                for i in hand:
-                    score += i.get_value()
-
-                score /= 5
-                score += 90
-
-            else:
-                return 0
-
-        # function to check what is the best possible hand that player can get from his five cards and returns the score
-        def check_best_hand(hand):
-
-            score = 0
-
-            if check_straight_flush(hand) != 0:
-                score = check_straight_flush(hand)
-
-            elif check_four(hand) != 0 and score == 0:
-                score = check_four(hand)
-
-            elif check_full_house(hand) != 0 and score == 0:
-                score = check_full_house(hand)
-
-            elif check_flush(hand) != 0 and score == 0:
-                score = check_flush(hand)
-
-            elif check_straight(hand) != 0 and score == 0:
-                score = check_straight(hand)
-
-            elif check_triple(hand) != 0 and score == 0:
-                score = check_triple(hand)
-
-            elif check_two_pairs(hand) != 0 and score == 0:
-                score = check_two_pairs(hand)
-
-            elif check_pair(hand) != 0 and score == 0:
-                score = check_pair(hand)
-
-            else:
-                highest(hand)
-                score = hand[0].get_value()
-
-            print()
-            print(score)
+            score = score / 4 + 30
 
             return score
 
-        # Builds deck and creates all the players
-        deck = Deck()
-        computer1 = Player("C1")
-        computer2 = Player("C2")
-        computer3 = Player("C3")
+        else:
+            return 0
 
-        players = [computer1, computer2, computer3, player]
+    # Checks for straight
+    def check_straight(hand):
+        # puts cards in order from highest to lowest value
+        highest(hand)
 
-        # create hands for all the players
-        comp_c1 = []
-        comp_c2 = []
-        comp_c3 = []
-        player_c = []
-        players_cards = [comp_c1, comp_c2, comp_c3, player_c]
+        if (hand[0].get_value() - 1 == hand[1].get_value() and hand[1].get_value() - 1 == hand[2].get_value() and
+                hand[2].get_value() - 1 == hand[3].get_value() and hand[3].get_value() - 1 == hand[4].get_value()):
+
+            score = 60 + hand[0].get_value()
+
+            return score
+
+        else:
+            return 0
+
+    # checks for flush
+    def check_flush(hand):
+        # puts cards in order from highest to lowest value
+        highest(hand)
+
+        if (hand[0].get_suit() == hand[1].get_suit() and hand[1].get_suit() == hand[2].get_suit() and
+                hand[2].get_suit() == hand[3].get_suit() and hand[3].get_suit() == hand[4].get_suit()):
+
+            score = 75 + hand[0].get_value()
+
+            return score
+
+        else:
+            return 0
+
+    # Checks for straight flush
+    def check_straight_flush(hand):
+
+        if check_flush(hand) > 75 and check_straight(hand) > 60:
+            # puts cards in order from highest to lowest value
+            highest(hand)
+
+            score = 120 + hand[0].get_value()
+
+            return score
+
+        else:
+            return 0
+
+    # Checks for full house
+    def check_full_house(hand):
+        # puts cards in order from highest to lowest value
+        highest(hand)
+
+        score = 0
+
+        # checks for possible ways to get full house with five cards
+        if (hand[0].get_value() == hand[1].get_value()
+                and hand[2].get_value() == hand[3].get_value() == hand[4].get_value()):
+
+            for i in hand:
+                score += i.get_value()
+
+            score /= 5
+            score += 90
+
+        elif (hand[0].get_value() == hand[1].get_value() == hand[2].get_value()
+              and hand[3].get_value() == hand[4].get_value()):
+
+            for i in hand:
+                score += i.get_value()
+
+            score /= 5
+            score += 90
+
+        else:
+            return 0
+
+    # function to check what is the best possible hand that player can get from his five cards and returns the score
+    def check_best_hand(hand):
+
+        score = 0
+
+        if check_straight_flush(hand) != 0:
+            score = check_straight_flush(hand)
+
+        elif check_four(hand) != 0 and score == 0:
+            score = check_four(hand)
+
+        elif check_full_house(hand) != 0 and score == 0:
+            score = check_full_house(hand)
+
+        elif check_flush(hand) != 0 and score == 0:
+            score = check_flush(hand)
+
+        elif check_straight(hand) != 0 and score == 0:
+            score = check_straight(hand)
+
+        elif check_triple(hand) != 0 and score == 0:
+            score = check_triple(hand)
+
+        elif check_two_pairs(hand) != 0 and score == 0:
+            score = check_two_pairs(hand)
+
+        elif check_pair(hand) != 0 and score == 0:
+            score = check_pair(hand)
+
+        else:
+            highest(hand)
+            score = hand[0].get_value()
+
+        print()
+        print(score)
+
+        return score
+
+    # Shuffle deck and give cards
+    def create_game():
 
         # shuffles the deck
         deck.shuffle_deck()
@@ -344,8 +330,22 @@ def poker_game():
             for c in i:
                 c.show_card()
 
-        print()
+        def show_card(card):
+            suit = []
+            if card.get_suit() == "Clubs":
+                suit = clubs
+            elif card.get_suit() == "Spades":
+                suit = spades
+            elif card.get_suit() == "Diamonds":
+                suit = diamonds
+            elif card.get_suit() == "Hearts":
+                suit = hearts
 
+            return suit[card.get_value()-2]
+
+
+
+    def check_winner():
         # checks every players best hand and gives them score from it
         computer1.set_score(check_best_hand(comp_c1))
         computer2.set_score(check_best_hand(comp_c2))
@@ -371,8 +371,8 @@ def poker_game():
 
     # creates empty canvas and stretches it to fit on the window
     canvas = Canvas(poker, background='green', width=1200, height=800)
-    canvas.create_line(0, 600, 1200, 600, fill='grey')
-    canvas.create_line(200, 0, 200, 800, fill='grey')
+    canvas.create_line(0, 600, 1200, 600, fill='black')
+    canvas.create_line(200, 0, 200, 800, fill='black')
     canvas.pack()
 
     money_lbl_p = Label(poker, font=('calibri', 16, 'bold'), background='green')
@@ -385,8 +385,16 @@ def poker_game():
     bet_lbl = Label(poker, text="Bet amount", font=('calibri', 14, 'bold'), background='green')
     bet_lbl.place(x=3, y=660)
 
-    poker_button = Button(poker, text="ROLL", command=poker_game)
+    poker_button = Button(poker, text="Play", command=create_game, width=30)
+    poker_button.place(x=5, y=775)
 
+    switch_button = Button(poker, text='Switch')
+
+    check1 = Checkbutton(poker, onvalue=1, offvalue=0)
+    check2 = Checkbutton(poker, onvalue=1, offvalue=0)
+    check3 = Checkbutton(poker, onvalue=1, offvalue=0)
+    check4 = Checkbutton(poker, onvalue=1, offvalue=0)
+    check5 = Checkbutton(poker, onvalue=1, offvalue=0)
 
     # all the pics of cards
     # Spades
@@ -450,6 +458,21 @@ def poker_game():
     clubs = [c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14]
     diamonds = [d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14]
     hearts = [h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14]
+
+    # Builds deck and creates all the players
+    deck = Deck()
+    computer1 = Player("C1")
+    computer2 = Player("C2")
+    computer3 = Player("C3")
+
+    players = [computer1, computer2, computer3, player]
+
+    # create hands for all the players
+    comp_c1 = []
+    comp_c2 = []
+    comp_c3 = []
+    player_c = []
+    players_cards = [comp_c1, comp_c2, comp_c3, player_c]
 
 
 
