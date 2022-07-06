@@ -1,3 +1,3 @@
 # Python_project
 
-Exercise kansiossa on koko projecti
+Exercise_work kansiossa on koko projecti
